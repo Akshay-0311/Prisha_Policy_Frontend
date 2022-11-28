@@ -1,0 +1,15 @@
+.home-header {
+  padding-left: 85px;
+  padding-top: 20px;
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 54px;
+  /* identical to box height */
+
+  /* Brand/Primary */
+
+  color: #27378c;
+}
+
