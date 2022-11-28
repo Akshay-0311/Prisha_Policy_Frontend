@@ -7,7 +7,7 @@ import AboutBook from "./pages/AboutBook";
 function App() {
   return (
     <div>
-        <AboutBook/>
+        <Home/>
     </div>
   );
 }
