@@ -8,7 +8,7 @@ function index() {
         <Header/>
         <div>
             <div className="home-header">
-                <span>My Books</span>
+                <span>My Books is in the title</span>
             </div>   
         </div>  
     </>
