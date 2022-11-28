@@ -1,32 +1,66 @@
-import React from "react";
-import Header from "../../components/Header";
+import React, { useState, useEffect } from "react";
 import "./style.css";
-import data from "./data.json";
 import { Col, Container, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function index() {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigate = useNavigate();
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [books , setBooks] = useState<any>([]);
+
+  const goToAddBook = () => {
+    navigate("/add_book");
+  };
+
+  const goToBookDetail = (id : number) => {
+      navigate(`/get_book/${id}`)
+  }
+
+  const getBooks = () => {
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}get_books`)
+      .then((result) => {
+          setBooks(result.data.all_books)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    getBooks();
+  }, []);
+
   return (
     <>
-      <Header />
       <div>
         <div className="home-header">
+        <i className="fa fa-book"></i> &nbsp;
           <span>My Books</span>
         </div>
         <Container>
           <Row>
-            {data?.map((d: any) => (
-              <Col xs={2} className = "col">
-                <div className="book-thumbnail">
-                  <img src={`${process.env.REACT_APP_BACKEND_URL}${d.img}`} alt="thumbnail"/>
-                  <span className="book-thumbnail-name">{d.name}</span>
-                  <span className="book-thumbnail-author">{d.author}</span>
+            {books?.map((book: any) => (
+              <Col xs={2} className="col" key={book.id}>
+                <div className="book-thumbnail" onClick = {(e) => goToBookDetail(book.id)}>
+                  <img
+                    src={`${process.env.REACT_APP_BACKEND_URL_PUBLIC}${book.thumbnail_name}`}
+                    alt="thumbnail"
+                    className = "thumbnail_image"
+                  />
+                  <span className="book-thumbnail-name">{book.name}</span>
+                  <span className="book-thumbnail-author">{book.author}</span>
                 </div>
               </Col>
             ))}
-            <Col xs = {2} className = "col">
-              <div className="add-book-thumbnail">
+            <Col xs={2} className="col">
+              <div className="add-book-thumbnail" onClick={goToAddBook}>
                 <span>+</span>
-                <span>Add a book</span>
+                <em>Add a book</em>
               </div>
             </Col>
           </Row>

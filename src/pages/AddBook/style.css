@@ -70,3 +70,60 @@
   background: #27378c;
   color: white;
 }
+
+.important {
+  color: #f64b3c;
+}
+
+.upload-title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  color: #27378c;
+}
+
+.upload-title em {
+  font-style: normal;
+  text-decoration-line: underline;
+}
+
+.upload-title em:hover {
+  cursor: pointer;
+}
+
+.upload-about {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  color: #7a7a7a;
+}
+
+.add-book-cover-1 em {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #27378c;
+  font-style: normal;
+}
+
+.fa-cloud-upload {
+  color: #27378c;
+  font-size: 22px;
+}
+
+.fa-info-circle {
+    margin-top: 8px;
+    color: #7A7A7A;
+    font-size: 18px;
+}
+
+.input-title {
+  display: flex;
+  justify-content: space-between;
+}

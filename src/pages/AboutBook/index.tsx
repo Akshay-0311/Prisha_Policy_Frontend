@@ -1,17 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Header from "../../components/Header";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import "./style.css";
 
 export default function AboutBook() {
+  const [book, setBook] = useState<any>();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const getBook = () => {
+    const id = location.pathname.split("/").pop();
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}get_book/${id}`)
+      .then((result) => {
+        setBook(result?.data?.book[0]);
+      })
+      .catch((err) => {
+        console.log(`Error`, err);
+      });
+  };
+
+  const backToHome = () => {
+    navigate("/");
+  };
+
+  useEffect(() => {
+    getBook();
+  }, []);
+
   return (
     <>
-      <Header />
       <br />
       <Container>
         <Row>
           <Col xs={4}>
-            <span className="backToHome">Back to home</span>
+            <span className="back-to-home" onClick={backToHome}>
+              <i className="fa fa-angle-left" aria-hidden="true"></i>&nbsp;
+              &nbsp;<span>Back to home</span>
+            </span>
           </Col>
         </Row>
       </Container>
@@ -19,25 +47,22 @@ export default function AboutBook() {
       <Container>
         <Row>
           <Col xs={4}>
-            <div style={{ backgroundColor: "red" }}>50</div>
+            <div>
+              <img
+                src={`${process.env.REACT_APP_BACKEND_URL_PUBLIC}${book?.thumbnail_name}`}
+                className="book-detail-thumbnail"
+                alt="thumbnail"
+              />
+            </div>
           </Col>
           <Col xs={8}>
             <div className="about-book">
-              <span className="book-title">The Martin</span>
-              <span className="author">Andy Weir</span>
+              <span className="book-title">{book?.name}</span>
+              <span className="author">{book?.author}</span>
               <span className="read-time">
-                Book Read Time: <em>10 mins</em>
+                Book Read Time: <em>{book?.read_time} mins</em>
               </span>
-              <span className="book-detail">
-                When astronauts blast off from the planet Mars, they leave
-                behind Mark Watney (Matt Damon), presumed dead after a fierce
-                storm. With only a meager amount of supplies, the stranded
-                visitor must utilize his wits and spirit to find a way to
-                survive on the hostile planet. Meanwhile, back on Earth, members
-                of NASA and a team of international scientists work tirelessly
-                to bring him home, while his crew mates hatch their own plan for
-                a daring rescue mission.
-              </span>
+              <span className="book-detail">{book?.details}</span>
             </div>
             <br />
             <div className="summary">Summary</div>
@@ -72,10 +97,13 @@ export default function AboutBook() {
                 </div>
               </div>
               <div className="rate-right">
-                <span>You have not read this book yet.Click on the button to start rating</span>
-                <br/>
-                <br/>
-                <br/>
+                <span>
+                  You have not read this book yet.Click on the button to start
+                  rating
+                </span>
+                <br />
+                <br />
+                <br />
                 <span className="rate-button">Rate this book</span>
               </div>
             </div>
